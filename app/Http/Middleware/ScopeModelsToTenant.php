@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\Client;
+use App\Models\Contact;
 use App\TenantScope;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
@@ -20,6 +21,7 @@ class ScopeModelsToTenant
     {
         if ($request->query('tenant')) {
             Client::addGlobalScope(new TenantScope($request->query('tenant')));
+            Contact::addGlobalScope(new TenantScope($request->query('tenant')));
         }
 
         return $next($request);
