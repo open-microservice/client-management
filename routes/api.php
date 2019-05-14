@@ -1,3 +1,4 @@
 <?php
 
-Route::resource('/clients', 'ClientsController');
+Route::apiResource('/clients', 'ClientsController');
+Route::apiResource('/contacts', 'ContactsController');
