@@ -46,7 +46,7 @@ class ClientsController extends Controller
      */
     public function show(Client $client)
     {
-        return response()->json($client);
+        return response()->json($client->load('contacts'));
     }
 
     /**
