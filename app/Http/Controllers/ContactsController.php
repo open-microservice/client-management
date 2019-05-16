@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\FormPersistanceException;
+use App\Http\Requests\CreateContactRequest;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 
@@ -20,12 +22,17 @@ class ContactsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\CreateContactRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateContactRequest $request)
     {
-        //
+        try {
+            $contact = $request->persist();
+            return response()->json($contact, 201);
+        } catch (FormPersistanceException $e) {
+            return response()->json(['message' => 'Could not persist the contact.'], 400);
+        }
     }
 
     /**

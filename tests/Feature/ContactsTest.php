@@ -42,4 +42,26 @@ class ContactsTest extends TestCase
             ->assertStatus(200)
             ->assertJsonCount(5);
     }
+
+    public function testTheContactCanBeCreated()
+    {
+        $contact = factory(Contact::class)->make();
+
+        $this->json('POST', '/api/contacts', $contact->toArray())->assertStatus(201);
+
+        $this->assertDatabaseHas('contacts', $contact->toArray());
+    }
+
+    public function testTheContactCanBeCreatedAndAssignedToATennant()
+    {
+        $initialTenant = Uuid::uuid4()->toString();
+        $contact = factory(Contact::class)->make(['tenant_id' => $initialTenant]);
+
+        $this->json('POST', '/api/contacts', $contact->toArray())->assertStatus(201);
+
+        $this->assertDatabaseHas('contacts', [
+            'tenant_id' => $initialTenant,
+            'first_name' => $contact->first_name
+        ]);
+    }
 }
