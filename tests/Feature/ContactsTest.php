@@ -64,4 +64,15 @@ class ContactsTest extends TestCase
             'first_name' => $contact->first_name
         ]);
     }
+
+    public function testTheContactCanBeUpdated()
+    {
+        $contact = factory(Contact::class)->create();
+        $this->json('PUT', '/api/contacts/'.$contact->identifier, array_merge($contact->toArray(), ['first_name' => 'John']));
+
+        $this->assertDatabaseHas('contacts', [
+            'identifier' => $contact->identifier,
+            'first_name' => 'John'
+        ]);
+    }
 }

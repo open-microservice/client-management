@@ -4,6 +4,8 @@
 namespace App\Http\Requests;
 
 
+use Illuminate\Database\Eloquent\Model;
+
 interface Persistable
 {
     /**
@@ -11,5 +13,5 @@ interface Persistable
      *
      * @return mixed
      */
-    public function persist();
+    public function persist(Model $record = null);
 }
