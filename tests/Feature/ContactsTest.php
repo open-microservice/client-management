@@ -52,7 +52,7 @@ class ContactsTest extends TestCase
         $this->assertDatabaseHas('contacts', $contact->toArray());
     }
 
-    public function testTheContactCanBeCreatedAndAssignedToATennant()
+    public function testTheContactCanBeCreatedAndAssignedToATenant()
     {
         $initialTenant = Uuid::uuid4()->toString();
         $contact = factory(Contact::class)->make(['tenant_id' => $initialTenant]);
