@@ -75,4 +75,14 @@ class ContactsTest extends TestCase
             'first_name' => 'John'
         ]);
     }
+
+    public function testTheContactCanBeDeleted()
+    {
+        $contact = factory(Contact::class)->create();
+        $this->assertNull($contact->deleted_at);
+
+        $this->json('DELETE', '/api/contacts/'.$contact->identifier);
+
+        $this->assertNotNull($contact->fresh()->deleted_at);
+    }
 }
